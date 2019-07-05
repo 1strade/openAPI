@@ -605,4 +605,4 @@ WCS提供限价和市价两种订单类型。
 |address|String|是|提现地址|
   
 [1strade]: https://www.1strade.co 
-[English Docs]: https://github.com/1strade/openAPI/edit/master/README_EN.md
+[English Docs]: https://github.com/1strade/openAPI/blob/master/README_EN.md
