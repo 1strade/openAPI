@@ -392,10 +392,10 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
     
 |参数名|参数类型|必填|描述|
 |-----|----|----|----|
-|code|String|是|币对如btc_usdt|
-|type|String|是|K线周期类型如1min/1hour/day/week/month|
-|start|String|是|基于ISO 8601标准的开始时间|
-|end|String|是|基于ISO 8601标准的结束时间|
+|pairCode|String|是|币对如btc_usdt|
+|interval|String|是|K线周期类型如1min/1hour/day/week/month|
+|start|String|否|基于ISO 8601标准的开始时间|
+|end|String|否|基于ISO 8601标准的结束时间|
 
 ### 6. 获取服务器时间
 获取API服务器的时间的接口。
