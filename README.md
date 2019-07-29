@@ -367,7 +367,7 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 **请求**
 ```http
     # Request
-    GET  /api/v1/spot/products/<code>/candles?type=1min&start=start_time&end=end_time
+    GET  /openapi/exchange/public/{pairCode}/candles?interval=1min&start=start_time&end=end_time
 ```
 **响应**
     
@@ -396,6 +396,7 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 |type|String|是|K线周期类型如1min/1hour/day/week/month|
 |start|String|是|基于ISO 8601标准的开始时间|
 |end|String|是|基于ISO 8601标准的结束时间|
+
 ### 6. 获取服务器时间
 获取API服务器的时间的接口。
 **请求**
