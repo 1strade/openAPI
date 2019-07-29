@@ -135,40 +135,57 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 **请求**
 ```http
     # Request
-    GET /api/v1/spot/products
+    GET /openapi/exchange/public/currencies
 ```
 **响应**
 ```javascript
     # Response
-    [
-        {
-            "code":"LTC_BTC",
-            "baseCurrency":"LTC",
-            "baseMinSize":"0.01",
-            "baseIncrement":"0.0001"
-            "quoteCurrency":"BTC",
-            "quoteIncrement":"0.00000001"
-        },
-        {   
-            "code":"ETH_BTC",
-            "baseCurrency":"ETH",
-            "baseMinSize":"0.001",
-            "baseIncrement":"0.000001"            
-            "quoteCurrency":"BTC",
-            "quoteIncrement":"0.00000001"
-        },
-        ...
-    ]
+    [{
+    	"baseIncrement": 0,
+    	"baseSymbol": "BTC",
+    	"makerFeesRate": "0",
+    	"maxPrice": 4,
+    	"maxVolume": 4,
+    	"minTrade": 0.00001000,
+    	"online": 0,
+    	"pairCode": "BTC_USDT",
+    	"quoteIncrement": 0,
+    	"quotePrecision": 0,
+    	"quoteSymbol": "USDT",
+    	"sort": 1,
+    	"tickerFeesRate": "0"
+    }, {
+    	"baseIncrement": 0,
+    	"baseSymbol": "ETH",
+    	"makerFeesRate": "0",
+    	"maxPrice": 4,
+    	"maxVolume": 4,
+    	"minTrade": 0.01000000,
+    	"online": 0,
+    	"pairCode": "ETH_USDT",
+    	"quoteIncrement": 0,
+    	"quotePrecision": 0,
+    	"quoteSymbol": "USDT",
+    	"sort": 2,
+    	"tickerFeesRate": "0"
+    },...]
 ```
 **返回值说明**  
 |返回字段 | 字段说明|
 | ----------|:-------:|
-| code            | 币对代码|
-| baseCurrency   | 基础币 |
-| baseMinSize   | 最小委托数量 |
-| baseIncrement | 委托数量精度 |
-| quoteCurrency  | 计价币 |
-| quoteIncrement | 价格精度 |
+| baseIncrement | 交易数量最小交易变动单位 |
+| baseSymbol    | 交易货币 |
+| makerFeesRate | maker 费率 |
+| maxPrice  | 交易价格小数位数 |
+| maxVolume | 交易数量小数位数 |
+| minTrade | 最小委托量 |
+| online | 是否上线 |
+| pairCode | 是Base和quote之间的组合 BTC_USD |
+| quoteIncrement | 最小交易单位 |
+| quotePrecision | 计价货币数量单位精度 |
+| quoteSymbol | 计价货币 |
+| sort | 排序值 |
+| tickerFeesRate | ticker 费率 |
 ### 2. 获取币对交易深度列表
 **请求**
 ```http
