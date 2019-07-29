@@ -31,8 +31,7 @@
         - [3. 撤销所有委托](#3-撤销所有委托)
         - [4. 按订单撤销委托](#4-按订单撤销委托)
         - [5. 查询所有订单](#5-查询所有订单)
-        - [6. 按id查询订单](#6-按id查询订单)
-        - [7. 获取账单](#7-获取账单)
+        - [6. 获取账单](#6-获取账单)
 <!-- /TOC -->
 # 介绍
 欢迎使用[1strade][]开发者文档。
@@ -598,51 +597,7 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 |page|Integer|否|第几页|
 |pageSize|Integer|否|每页条数|
 
-### 6. 按id查询订单
-按照订单id查询指定订单。
-**请求**
-```http
-    # Request
-    GET /api/v1/spot/orders/﻿9887828?code=eth_btc
-```
-**响应**
-```javascript
-    # Response 
-    {
-        "averagePrice":"0",
-        "code":"eth_btc",
-        "createdDate":9887828,
-        "filledVolume":"0",
-        "funds":"0",
-        "orderId":9865872,
-        "orderType":"limit",
-        "price":"0.00001",
-        "side":"buy",
-        "status":"canceled",
-        "volume":"1"
-    }
-```
-**返回值说明**
-    
-|返回字段|字段说明|
-|----|----|
-|averagePrice|已成交部分均价，如果未成交则为0|
-|code|币对，如BTC_USDT|
-|createDate|创建订单的时间戳|
-|filledVolume|已成交数量|
-|funds|已成交金额|
-|orderId|订单ID|
-|price|委托价|
-|side|交易方向|
-|status|状态|
-|volume|委托数量|
-**请求参数**  
-    
-|参数名|参数类型|必填|描述|
-|-----|----|----|----|
-|code|String|是|币对，如BTC_USDT|
-|orderId|String|是|订单Id|
-### 7. 获取账单，支持分页查询
+### 6. 获取账单，支持分页查询
 获取币币交易账单。
 **请求**
 ```http
