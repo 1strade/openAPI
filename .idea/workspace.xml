@@ -17,24 +17,24 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="293">
-                <caret line="471" column="3" lean-forward="false" selection-start-line="471" selection-start-column="3" selection-end-line="471" selection-end-column="3" />
+              <first_editor relative-caret-position="488">
+                <caret line="484" column="12" lean-forward="false" selection-start-line="484" selection-start-column="12" selection-end-line="484" selection-end-column="12" />
                 <folding>
-                  <marker date="1564409543711" expanded="true" signature="4217:4542" ph="{&quot;id&quot;: 0...}" />
-                  <marker date="1564409543711" expanded="true" signature="4544:4869" ph="{&quot;id&quot;: 0...}" />
-                  <marker date="1564409543711" expanded="true" signature="5421:5682" ph="{...}" />
-                  <marker date="1564409543711" expanded="true" signature="5438:5523" ph="[...]" />
-                  <marker date="1564409543711" expanded="true" signature="5452:5522" ph="[...]" />
-                  <marker date="1564409543711" expanded="true" signature="5566:5650" ph="[...]" />
-                  <marker date="1564409543711" expanded="true" signature="5580:5649" ph="[...]" />
-                  <marker date="1564409543711" expanded="true" signature="6066:6569" ph="{...}" />
-                  <marker date="1564409543711" expanded="true" signature="7205:7224" ph="[...]" />
-                  <marker date="1564409543711" expanded="true" signature="9030:9102" ph="{...}" />
-                  <marker date="1564409543711" expanded="true" signature="9608:9727" ph="{...}" />
-                  <marker date="1564409543711" expanded="true" signature="11558:11871" ph="{...}" />
-                  <marker date="1564409543711" expanded="true" signature="12452:12748" ph="{...}" />
-                  <marker date="1564409543711" expanded="true" signature="13217:13465" ph="{...}" />
-                  <marker date="1564409543711" expanded="true" signature="13341:13412" ph="{...}" />
+                  <marker date="1564409642649" expanded="true" signature="4217:4542" ph="{&quot;id&quot;: 0...}" />
+                  <marker date="1564409642649" expanded="true" signature="4544:4869" ph="{&quot;id&quot;: 0...}" />
+                  <marker date="1564409642649" expanded="true" signature="5421:5682" ph="{...}" />
+                  <marker date="1564409642649" expanded="true" signature="5438:5523" ph="[...]" />
+                  <marker date="1564409642649" expanded="true" signature="5452:5522" ph="[...]" />
+                  <marker date="1564409642649" expanded="true" signature="5566:5650" ph="[...]" />
+                  <marker date="1564409642649" expanded="true" signature="5580:5649" ph="[...]" />
+                  <marker date="1564409642649" expanded="true" signature="6066:6569" ph="{...}" />
+                  <marker date="1564409642649" expanded="true" signature="7205:7224" ph="[...]" />
+                  <marker date="1564409642649" expanded="true" signature="9030:9102" ph="{...}" />
+                  <marker date="1564409642649" expanded="true" signature="9608:9727" ph="{...}" />
+                  <marker date="1564409642649" expanded="true" signature="11583:11896" ph="{...}" />
+                  <marker date="1564409642649" expanded="true" signature="12477:12773" ph="{...}" />
+                  <marker date="1564409642649" expanded="true" signature="13242:13490" ph="{...}" />
+                  <marker date="1564409642649" expanded="true" signature="13366:13437" ph="{...}" />
                 </folding>
               </first_editor>
               <second_editor />
@@ -522,12 +522,12 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1564400843479</updated>
-      <workItem from="1564400845048" duration="7625000" />
+      <workItem from="1564400845048" duration="7722000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="7625000" />
+    <option name="totallyTimeSpent" value="7722000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="23" width="1440" height="813" extended-state="0" />
@@ -575,24 +575,24 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="293">
-            <caret line="471" column="3" lean-forward="false" selection-start-line="471" selection-start-column="3" selection-end-line="471" selection-end-column="3" />
+          <first_editor relative-caret-position="488">
+            <caret line="484" column="12" lean-forward="false" selection-start-line="484" selection-start-column="12" selection-end-line="484" selection-end-column="12" />
             <folding>
-              <marker date="1564409543711" expanded="true" signature="4217:4542" ph="{&quot;id&quot;: 0...}" />
-              <marker date="1564409543711" expanded="true" signature="4544:4869" ph="{&quot;id&quot;: 0...}" />
-              <marker date="1564409543711" expanded="true" signature="5421:5682" ph="{...}" />
-              <marker date="1564409543711" expanded="true" signature="5438:5523" ph="[...]" />
-              <marker date="1564409543711" expanded="true" signature="5452:5522" ph="[...]" />
-              <marker date="1564409543711" expanded="true" signature="5566:5650" ph="[...]" />
-              <marker date="1564409543711" expanded="true" signature="5580:5649" ph="[...]" />
-              <marker date="1564409543711" expanded="true" signature="6066:6569" ph="{...}" />
-              <marker date="1564409543711" expanded="true" signature="7205:7224" ph="[...]" />
-              <marker date="1564409543711" expanded="true" signature="9030:9102" ph="{...}" />
-              <marker date="1564409543711" expanded="true" signature="9608:9727" ph="{...}" />
-              <marker date="1564409543711" expanded="true" signature="11558:11871" ph="{...}" />
-              <marker date="1564409543711" expanded="true" signature="12452:12748" ph="{...}" />
-              <marker date="1564409543711" expanded="true" signature="13217:13465" ph="{...}" />
-              <marker date="1564409543711" expanded="true" signature="13341:13412" ph="{...}" />
+              <marker date="1564409642649" expanded="true" signature="4217:4542" ph="{&quot;id&quot;: 0...}" />
+              <marker date="1564409642649" expanded="true" signature="4544:4869" ph="{&quot;id&quot;: 0...}" />
+              <marker date="1564409642649" expanded="true" signature="5421:5682" ph="{...}" />
+              <marker date="1564409642649" expanded="true" signature="5438:5523" ph="[...]" />
+              <marker date="1564409642649" expanded="true" signature="5452:5522" ph="[...]" />
+              <marker date="1564409642649" expanded="true" signature="5566:5650" ph="[...]" />
+              <marker date="1564409642649" expanded="true" signature="5580:5649" ph="[...]" />
+              <marker date="1564409642649" expanded="true" signature="6066:6569" ph="{...}" />
+              <marker date="1564409642649" expanded="true" signature="7205:7224" ph="[...]" />
+              <marker date="1564409642649" expanded="true" signature="9030:9102" ph="{...}" />
+              <marker date="1564409642649" expanded="true" signature="9608:9727" ph="{...}" />
+              <marker date="1564409642649" expanded="true" signature="11583:11896" ph="{...}" />
+              <marker date="1564409642649" expanded="true" signature="12477:12773" ph="{...}" />
+              <marker date="1564409642649" expanded="true" signature="13242:13490" ph="{...}" />
+              <marker date="1564409642649" expanded="true" signature="13366:13437" ph="{...}" />
             </folding>
           </first_editor>
           <second_editor />

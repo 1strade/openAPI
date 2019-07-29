@@ -474,14 +474,16 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 订单id
 
 **请求参数**
+
 |参数名| 参数类型 |必填|描述|
 |:----:|:----:|:---:|----|
-|code|String|是|币对，如BTC_USDT|
+|pairCode|String|是|币对，如BTC_USDT|
 |side|String|是|买入为buy，卖出为sell|
-|type|String|是|限价委托为limit，市价委托为market|
-|size|String|否|限价委托以及市价卖出时传递，代表交易币的数量|
+|systemOrderType|String|是|限价委托为limit，市价委托为market|
+|volume|String|否|限价委托以及市价卖出时传递，代表交易币的数量|
 |price|String|否|限价委托时传递，代表交易价格|
-|funds|String|否|市价买入时传递，代表计价币的数量|
+|quoteVolume|String|否|市价买入时传递，代表计价币的数量|
+
 ### 3. 撤销所有委托
 撤销目标币对下所有未成交委托，最多撤销50条。由于是异步撤单，所以该接口没有返回值。
 **请求**
