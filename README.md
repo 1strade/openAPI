@@ -528,44 +528,76 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 **请求**
 ```http   
     # Request
-    GET /api/v1/spot/orders?code=eth_btc&status=open
+    GET /openapi/exchange/orders
 ```
 **响应**
 ```javascript
     # Response
-    {
-        "averagePrice": "0",
-        "code": "eth_btc",
-        "createdDate": 1526299182000,
-        "filledVolume": "0",
-        "funds": "0",
-        "orderId": 9865872,
-        "orderType": "limit",
-        "price": "0.00001",
-        "side": "buy",
-        "status": "canceled",
-        "volume": "1"
-    }
+    [
+        [
+            	"id": 1524801032573,
+				"pairCode": "BTC_USDT",
+				"userId": 1001,		
+				"brokerId": 10000,		
+				"side": "buy",
+				"entrustPrice": "1",
+				"amount": "1",
+				"dealAmount": "1",
+				"quoteAmount": "1",
+				"dealQuoteAmount": "1",
+				"systemOrderType": "limit",
+				"status": 0,
+				"sourceInfo": "web",
+				"createOn": 1524801032573,
+				"updateOn": 1524801032573,
+				"symbol": "BTC",
+				"trunOver": "1",
+				"notStrike": "0",
+				"averagePrice": "1",
+				"openAmount": "1"
+        ],
+        ...
+    ]
 ```
 **返回值说明**
+
 |返回字段|字段说明|
-|----|----|
-|averagePrice|已成交部分均价，如果未成交则为0|
-|code|币对，如BTC_USDT|
-|createDate|创建订单的时间戳|
-|filledVolume|已成交数量|
-|funds|已成交金额|
-|orderId|订单ID|
-|price|委托价|
-|side|交易方向|
-|status|状态|
-|volume|委托数量|
+|--------|----|
+| id |订单id|
+| pairCode |是Base和quote之间的组合 BTC_USD|
+| userId |用户id|
+| brokerId |券商id|
+| side |方向 买、卖|
+| entrustPrice |下单价格|
+| amount |下单数量|
+| dealAmount |成交数量|
+| quoteAmount |基准币数量  只有在市价买的情况下会用到|
+| dealQuoteAmount |基准币已成交数量|
+| systemOrderType |10:限价 11:市价|
+| status |0:未成交 1:部分成交 2:完全成交 3:撤单中 -1:已撤单|
+| sourceInfo |下单来源 web,api,Ios,android|
+| createOn |创建时间|
+| updateOn |修改时间|
+| symbol |币种|
+| trunOver |成交金额  dealQuoteAmount * dealAmount|
+| notStrike |尚未成交的数量|
+| averagePrice |平均成交价|
+| openAmount |下单数量|
+
 **请求参数**
+
 |参数名 | 参数类型 | 必填 | 描述 |
 |---|----|----|----|
-|code|String|是|币对，如BTC_USDT|
-|status|String|是|订单状态，﻿open（未成交）、filled（已完成）、canceled（已撤销）、cancel（撤销中）、partially-filled（部分成交）|
-|limit|Integer|否|请求返回数据量，默认/最大值为100|
+|pairCode|String|否|币对，如BTC_USDT|
+|startDate|Long|否|开始时间 毫秒|
+|endDate|Long|否|结束时间 毫秒|
+|price|BigDecimal|否|下单价格|
+|amount|BigDecimal|否|下单数量|
+|systemOrderType|Integer|否|10:限价 11:市价|
+|source|String|否|币对，如LTC_BTCweb,api,Ios,android|
+|page|Integer|否|第几页|
+|pageSize|Integer|否|每页条数|
+
 ### 6. 按id查询订单
 按照订单id查询指定订单。
 **请求**
