@@ -430,57 +430,49 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 **请求**
 ```
     # Request
-    GET /api/v1/spot/account/assets
+    GET /openapi/exchange/assets
 ```
 **响应**
 ```
     # Response
     [
         {
-            "available":"0.1",
-            "balance":"0.1",
-            "currencyCode":"ETH",
-            "hold":"0",
-            "id":1
-        },
-        {
+            "brokerId":10000,
+            "symbol":"BTC",
             "available":"1",
-            "balance":"1",
-            "currencyCode":"USDT",
             "hold":"0",
-            "id":1
-        }
+            "baseBTC":1,
+            "withdrawLimit":"1",
+        },
+        ...
     ]
 ```
 **返回值说明**
+
 |返回字段|字段说明|
 |----|----|
-|available|可用|
-|balance|余额|
-|currencyCode|币种|
+|brokerId|券商id|
+|symbol|币种|
+|available|余额|
 |hold|冻结|
-|id|账户ID|
+|baseBTC|折合BTC|
+|withdrawLimit|提币限额|
+
 ### 2. 交易委托
-WCS提供限价和市价两种订单类型。
+提供限价和市价两种订单类型。
 **请求**
 ```
     # Request
-    POST /api/v1/spot/orders
+    POST /openapi/exchange/{pairCode}/orders
 ```
 **响应**
 ```javascript
     # Response
-    {
-        "result": true,
-        "order_id": 123456
-    }
-```
-    
+    10000
+```   
 **返回值说明**
-|返回字段|字段说明|
-|----|----|
-| result |下单结果|
-| orderId |订单ID|
+订单id
+
 **请求参数**
 |参数名| 参数类型 |必填|描述|
 |:----:|:----:|:---:|----|
