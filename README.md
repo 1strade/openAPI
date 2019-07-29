@@ -11,7 +11,6 @@
     - [选择时间戳](#选择时间戳)
     - [请求交互](#请求交互)
         - [请求](#请求)
-        - [分页](#分页)
     - [标准规范](#标准规范)
         - [时间戳](#时间戳)
         - [例子](#例子)
@@ -34,12 +33,11 @@
         - [5. 查询所有订单](#5-查询所有订单)
         - [6. 按id查询订单](#6-按id查询订单)
         - [7. 获取账单](#7-获取账单)
-        - [8. 提现](#8-提现)
 <!-- /TOC -->
 # 介绍
 欢迎使用[1strade][]开发者文档。
 本文档提供了1strade交易平台的币币交易(Spot)业务的行情查询、交易、账户管理等API使用方法的介绍。
-行情API是公开接口，提供币币交易市场的行情数据；交易和账户API需要身份验证，提供下单、撤单、查询订单和帐户信息、提现等功能。
+行情API是公开接口，提供币币交易市场的行情数据；交易和账户API需要身份验证，提供下单、撤单、查询订单和帐户信息等功能。
 # 开始使用    
 REST，即Representational State Transfer的缩写，是一种流行的互联网传输架构。它具有结构清晰、符合标准、易于理解、扩展方便的，正得到越来越多网站的采用。其优点如下：
 + 在RESTful架构中，每一个URL代表一种资源；
@@ -67,27 +65,27 @@ ACCESS-SIGN的请求头是对 **timestamp + method + requestPath + "?" + querySt
 * queryString是GET请求中的查询字符串
 * body是指请求主体的字符串，如果请求没有主体(通常为GET请求)，则body可省略
 **例如：对于如下的请求参数进行签名**
-* 获取深度信息，以LTC-BTC为例
+* 获取深度信息，以LTC_BTC为例
 ```java
 Timestamp = 1540286290170 
 Method = "GET"
-requestPath = "/api/v1/spot/products/LTC-BTC/orderbook"
+requestPath = "/openapi/exchange/public/LTC_BTC/orderBook"
 queryString= "?size=100"
 ```
 生成待签名的字符串
 ```java
-Message = '1540286290170GET/api/v1/spot/products/LTC-BTC/orderbook?size=100'  
+Message = '1540286290170GET/openapi/exchange/public/LTC_BTC/orderBook?size=100'  
 ```
-* 下单，以LTC-BTC为例
+* 下单，以LTC_BTC为例
 ```java
 Timestamp = 1540286476248 
 Method = "POST"
-requestPath = "/api/v1/spot/orders"
-body = {"code":"LTC_BTC","side":"buy","type":"limit","size":"1","price":"1.001"}
+requestPath = "/openapi/exchange/LTC_BTC/orders"
+body = {"price":"1","side":"buy","source":"web","systemOrderType":"limit","volume":"1"}
 ```
 生成待签名的字符串
 ```java
-Message = '1540286476248POST/api/v1/spot/orders{"code":"LTC-BTC","side":"buy","type":"limit","size":"1","price":"1.001"}'  
+Message = '1540286476248POST/openapi/exchange/LTC_BTC/orders{"price":"1","side":"buy","source":"web","systemOrderType":"limit","volume":"1"}'  
 ```
 然后，将待签名字符串添加私钥参数生成最终待签名字符串
 ```java
@@ -116,11 +114,6 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 * 429 Too Many Requests – 请求太频繁被系统限流
 * 500 Internal Server Error – We had a problem with our server 服务器内部错误
 如果失败，Response body带有错误描述信息
-### 分页
-部分返回数据集的REST请求支持使用游标分页。    
-游标分页允许在结果的当前页面之前和之后获取结果，并且非常适合于实时数据。根据当前的返回结果，后续请求可以在此基础之上指定请求数据的方向，可以请求在这之前和之后的数据。before和after游标可通过响应头PD-BEFORE和PD-AFTER使用。
-**例子**
-`GET /orders?before=2&limit=30`
 ## 标准规范
 ### 时间戳
 除非另外指定，API中的所有时间戳均以微秒为单位返回。
