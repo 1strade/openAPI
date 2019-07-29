@@ -602,7 +602,7 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 **请求**
 ```http
     # Request
-    GET /api/v1/spot/account/eth/ledger
+    GET /openapi/exchange/bills
 ```
 **响应**
 ```javascript
@@ -636,25 +636,6 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 |----|---|---|---|
 |currencyCode|String|是|币种，如BTC|
 |limit|Integer|否|请求返回数据量，默认/最大值为100|
-### 8. 提现
-提现到钱包地址。
-**请求**
-```http
-    # Request
-    POST /api/v1/spot/account/withdraw
-```
-**响应**
-   
-```javascript
-    # Response
-    { ... }
-```
-**请求参数** 
-|参数名|参数类型|必填|描述  
-|---|----|----|----|
-|currencyCode|String|是|提现币种，如BTC|
-|amount|String|是|提现数量|
-|address|String|是|提现地址|
   
 [1strade]: https://www.1strade.co 
 [English Docs]: https://github.com/1strade/openAPI/blob/master/README_EN.md
