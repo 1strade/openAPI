@@ -608,15 +608,32 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 ```javascript
     # Response
     {
-        "amount": "0.00106415",
-        "balance": "0.65106415",
-        "createdDate": 1526290483000,
-        "details": {
-            "orderId":9772566,
-            "code":"ETH_BTC"
-        },
-        "id": 27826010,
-        "type": "buy"
+    	"code": 0,
+    	"data": {
+    		"bills": [{
+    				"amount": 1.6,
+    				"assets": "51.44",
+    				"brokerId": 0,
+    				"createOn": 1552636850000,
+    				"fee": -0.16,
+    				"id": 0,
+    				"makerTaker": 0,
+    				"referId": 0,
+    				"symbol": "",
+    				"tradeNo": "",
+    				"type": 7,
+    				"updateOn": 0,
+    				"userId": 0
+    			},
+    			...
+    		],
+    		"paginate": {
+    			"page": 1,
+    			"pageSize": 10,
+    			"total": 0
+    		}
+    	},
+    	"msg": "success"
     }
 ```
 **返回值说明**
