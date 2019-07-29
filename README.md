@@ -489,7 +489,7 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 **请求**
 ```
     # Request
-    DELETE /api/v1/spot/orders
+    DELETE /openapi/exchange/{pairCode}/cancel-all
 ```
 **响应**
 ```javascript
@@ -497,16 +497,18 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
     { ...}
 ```
 **请求参数**
+
 |参数名|参数类型|必填|描述|
 |----|----| ----| ----|
-|code|String|是|币对， 如BTC_USDT|
-|orderId|Long[]|否|订单id数组, 如[10010L,10011L,10012L]，目前只支持最多撤销50条订单，如果不填则撤销50条未完成订单|
+|pairCode|String|是|币对， 如BTC_USDT|
+目前批量撤销200个挂单
+
 ### 4. 按订单撤销委托
 按照订单id撤销指定订单。由于是异步撤单，所以该接口没有返回值。
 **请求**
 ```http
     # Request
-    DELETE /api/v1/spot/orders/{orderId}
+    DELETE /openapi/exchange/{pairCode}/orders/{id}
 ```
 **响应**
 ```javascript
@@ -514,10 +516,12 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
     {...}
 ```
 **请求参数**
+
 |参数名|参数类型|必填|描述|
 |---|----|----|----|
 |code|String|是|币对，如BTC_USDT|
 |orderId|String|是|需要撤销的未成交委托的id|
+
 ### 5. 查询订单，支持分页查询
 按照订单状态查询订单。
     
