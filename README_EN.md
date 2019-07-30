@@ -1,62 +1,62 @@
-1strade交易平台官方API文档
+1strade trading platform official API documentation
 ==================================================
-[1strade][]交易平台开发者文档([English Docs][])。
+[1strade][]Trading platform developer documentation([English Docs][])。
 <!-- TOC -->
-- [介绍](#介绍)
-- [开始使用](#开始使用)
-- [API接口加密验证](#api接口加密验证)
-    - [生成API Key](#生成api-key)
-    - [发起请求](#发起请求)
-    - [签名](#签名)
-    - [选择时间戳](#选择时间戳)
-    - [请求交互](#请求交互)
-        - [请求](#请求)
-    - [标准规范](#标准规范)
-        - [时间戳](#时间戳)
-        - [例子](#例子)
-        - [数字](#数字)
-        - [限流](#限流)
+- [Introduction ](#Introduction )
+- [Start to use](#Start to use)
+- [API interface encryption verification](#api interface encryption verification)
+    - [Generate API Key](#Generate api-key)
+    - [Propose request](#Propose request)
+    - [Signature](#Signature)
+    - [Select timestamp](#Select timestamp)
+    - [Request interaction](#Request interaction)
+        - [Request](#Request)
+    - [Standard](#Standard)
+        - [Timestamp](#Timestamp)
+        - [Examples](#Examples)
+        - [Number](#Number)
+        - [Current limit](#Current limit)
                 - [REST API](#rest-api)
-- [现货(Spot)业务API参考](#现货spot业务api参考)
-    - [币币行情API](#币币行情api)
-        - [1. 获取所有币对列表](#1-获取所有币对列表)
-        - [2. 获取币对交易深度列表](#2-获取币对交易深度列表)
-        - [3. 获取币对Ticker](#3-获取币对ticker)
-        - [4. 获取币对历史成交记录](#4-获取币对历史成交记录)
-        - [5. 获取K线数据](#5-获取k线数据)
-        - [6. 获取服务器时间](#6-获取服务器时间)
-    - [币币账户API](#币币账户api)
-        - [1. 获取账户信息](#1-获取账户信息)
-        - [2. 交易委托](#2-交易委托)
-        - [3. 撤销所有委托](#3-撤销所有委托)
-        - [4. 按订单撤销委托](#4-按订单撤销委托)
-        - [5. 查询所有订单](#5-查询所有订单)
-        - [6. 获取账单](#6-获取账单)
+- [Spot business API reference](#Spot business api reference)
+    - [Cryptos market API](#Cryptos market api)
+        - [1. Get a list of all pairs](#1-Get a list of all pairs)
+        - [2. Get trading depth list of trading pairs](#2-Get trading depth list of trading pairs)
+        - [3. Get pairs Ticker](#3-Get pairs ticker)
+        - [4. Get trading history of trading pairs](#4-Get trading history of trading pairs)
+        - [5. Get K-Line data](#5-Get K-Line data)
+        - [6. Get server time](#6-Get server time)
+    - [Crypto account API](#Crypto account api)
+        - [1. Get account information](#1-Get account information)
+        - [2. Orders](#2-Orders)
+        - [3. Cancel all orders](#3-Cancel all orders)
+        - [4. Cancel orders](#4-按订单撤销委托)
+        - [5. Query all orders](#5-Query all orders])
+        - [6. Get bills](#6-Get bills)
 <!-- /TOC -->
-# 介绍
-欢迎使用[1strade][]开发者文档。
-本文档提供了1strade交易平台的币币交易(Spot)业务的行情查询、交易、账户管理等API使用方法的介绍。
-行情API是公开接口，提供币币交易市场的行情数据；交易和账户API需要身份验证，提供下单、撤单、查询订单和帐户信息等功能。
-# 开始使用    
-REST，即Representational State Transfer的缩写，是一种流行的互联网传输架构。它具有结构清晰、符合标准、易于理解、扩展方便的，正得到越来越多网站的采用。其优点如下：
-+ 在RESTful架构中，每一个URL代表一种资源；
-+ 客户端和服务器之间，传递这种资源的某种表现层；
-+ 客户端通过四个HTTP指令，对服务器端资源进行操作，实现“表现层状态转化”。
-建议开发者使用REST API进行行情查询、币币交易和账户管理等操作。
-# API接口加密验证
-## 生成API KEY
-在对任何请求进行签名之前，您必须通过 1strade网站【用户中心】-【API】创建一个API KEY。 创建API KEY后，您将获得3个必须记住的信息：
+# Introduction 
+Welcome to use[1strade][]developer documentation.
+This document provides an introduction of 1strade crypto-crypto trading service API usage methods such as market inquiry, trading, and account management .
+The market API is a public interface that provides market data of the crypto trading market; the trading and account API require identity authentication for functions such as order placing, order cancellation and account information query .
+# Start to use   
+REST，the abbreviation of Representational State Transfer，is a kind of popular  internet transfer architecture featured with clear and standard structure ,scalablity and easy operation .The advantages are as follows: 
++ In a RESTful architecture, each URL represents a kind of resource;
++ A layer of presentation of such resources between the client end and the server;
++ The client end operates on the server-side resources through four HTTP commands to realize  "presentation layer state conversion".
+Developers are advised to use the REST API for market queries, crypto trading, and account management,etc.
+# API interface encryption verification
+## Generate API KEY
+Before signing any request, you must generate  an API KEY via the 1strade website [User Center] - [API]. After generating the API KEY, you will get 3 pieces of information that you must remember:
 * API Key
 * Secret Key
 * Passphrase
-API Key和Secret Key将随机生成，Passphrase由用户自己设定。
-## 发起请求
-所有REST请求都必须包含以下标题：
-* ACCESS-KEY API Key作为一个字符串
-* ACCESS-SIGN 使用base64编码签名（请参阅签名消息）
-* ACCESS-TIMESTAMP 作为您的请求的时间戳
-* ACCESS-PASSPHRASE 您在创建API KEY时设置的Passphrase
-* 所有请求都应该含有application/json类型内容，并且是有效的JSON
+API Key and Secret Key will be generated randomly.Passphrase will be set by users.
+## Propose request
+All REST requests must contain the following title：
+* ACCESS-KEY API Key as a string
+* ACCESS-SIGN Use base64 encoding signature (refer to signature message)
+* ACCESS-TIMESTAMP As the timestamp of your request
+* ACCESS-PASSPHRASE Passphrase that you set when generating  the API KEY
+* All requests should contain application/json type content and it should be valid JSON.
 ## 签名
 ACCESS-SIGN的请求头是对 **timestamp + method + requestPath + "?" + queryString + body** 字符串(+表示字符串连接)使用**HMAC SHA256**方法加密，通过**BASE64**编码输出而得到的。其中，timestamp的值与ACCESS-TIMESTAMP请求头相同。
 * method是请求方法(POST/GET/PUT/DELETE)，字母全部大写
