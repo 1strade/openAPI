@@ -14,12 +14,12 @@
     - [Standard](#Standard)
         - [Timestamp](#Timestamp)
         - [Examples](#Examples)
-        - [Number](#Number)
+        - [Digits](#Digits)
         - [Current limit](#Current limit)
                 - [REST API](#rest-api)
 - [Spot business API reference](#Spot business api reference)
     - [Cryptos market API](#Cryptos market api)
-        - [1. Get a list of all pairs](#1-Get a list of all pairs)
+        - [1. Get the list of all pairs](#1-Get a list of all pairs)
         - [2. Get trading depth list of trading pairs](#2-Get trading depth list of trading pairs)
         - [3. Get pairs Ticker](#3-Get pairs ticker)
         - [4. Get trading history of trading pairs](#4-Get trading history of trading pairs)
@@ -29,12 +29,12 @@
         - [1. Get account information](#1-Get account information)
         - [2. Orders](#2-Orders)
         - [3. Cancel all orders](#3-Cancel all orders)
-        - [4. Cancel orders](#4-按订单撤销委托)
+        - [4. Cancel orders](#4-Cancel specific orders)
         - [5. Query all orders](#5-Query all orders])
         - [6. Get bills](#6-Get bills)
 <!-- /TOC -->
 # Introduction 
-Welcome to use[1strade][]developer documentation.
+Welcome to use [1strade][]developer documentation.
 This document provides an introduction of 1strade crypto-crypto trading service API usage methods such as market inquiry, trading, and account management .
 The market API is a public interface that provides market data of the crypto trading market; the trading and account API require identity authentication for functions such as order placing, order cancellation and account information query .
 # Start to use   
@@ -57,86 +57,85 @@ All REST requests must contain the following title：
 * ACCESS-TIMESTAMP As the timestamp of your request
 * ACCESS-PASSPHRASE Passphrase that you set when generating  the API KEY
 * All requests should contain application/json type content and it should be valid JSON.
-## 签名
-ACCESS-SIGN的请求头是对 **timestamp + method + requestPath + "?" + queryString + body** 字符串(+表示字符串连接)使用**HMAC SHA256**方法加密，通过**BASE64**编码输出而得到的。其中，timestamp的值与ACCESS-TIMESTAMP请求头相同。
-* method是请求方法(POST/GET/PUT/DELETE)，字母全部大写
-* requestPath是请求接口路径
-* queryString是GET请求中的查询字符串
-* body是指请求主体的字符串，如果请求没有主体(通常为GET请求)，则body可省略
-**例如：对于如下的请求参数进行签名**
-* 获取深度信息，以LTC_BTC为例
+## Signature 
+The request header of ACCESS-SIGN is gotten  by encrypting the string **timestamp + method + requestPath + "?" + queryString + body** (+ indicates string concatenation) with **HMAC SHA256** method and **BASE64** Coded output. Among them, the value of timestamp is the same as the ACCESS-TIMESTAMP request header.
+* method refers to request method (POST/GET/PUT/DELETE)，all the letters have to be capitalized .
+* requestPath refers to the request interface path
+* queryString refers to the query string in the GET request
+* Body is the string of the request body. If the request has no body (usually a GET request), the body can be omitted.
+**For example: sign the following request parameters**
+* Get depth information, taking LTC_BTC as an example
 ```java
 Timestamp = 1540286290170 
 Method = "GET"
 requestPath = "/openapi/exchange/public/LTC_BTC/orderBook"
 queryString= "?size=100"
 ```
-生成待签名的字符串
+Generate a string to be signed
 ```java
 Message = '1540286290170GET/openapi/exchange/public/LTC_BTC/orderBook?size=100'  
 ```
-* 下单，以LTC_BTC为例
+* Place an order，taking LTC_BTC as an example
 ```java
 Timestamp = 1540286476248 
 Method = "POST"
 requestPath = "/openapi/exchange/LTC_BTC/orders"
 body = {"price":"1","side":"buy","source":"web","systemOrderType":"limit","volume":"1"}
 ```
-生成待签名的字符串
+Generate a string to be signed
 ```java
 Message = '1540286476248POST/openapi/exchange/LTC_BTC/orders{"price":"1","side":"buy","source":"web","systemOrderType":"limit","volume":"1"}'  
 ```
-然后，将待签名字符串添加私钥参数生成最终待签名字符串
+Then, adding the private key parameter to the string to be signed so as to generate the final string to be signed
 ```java
 hmac = hmac(secretkey, Message, SHA256)
-```
-在使用前需要对于hmac进行base64编码
+```Base64 encoding for hmac before use
 ```java
 Signature = base64.encode(hmac.digest())
 ```
-## 请求交互  
-REST访问的根URL：`https://www.1strade.co`
-### 请求
-所有请求基于Https协议，请求头信息中Content-Type需要统一设置为:'application/json’。
-**请求交互说明**
-1、请求参数：根据接口请求参数规定进行参数封装。
-2、提交请求参数：将封装好的请求参数通过POST/GET/DELETE等方式提交至服务器。
-3、服务器响应：服务器首先对用户请求数据进行参数安全校验，通过校验后根据业务逻辑将响应数据以JSON格式返回给用户。
-4、数据处理：对服务器响应数据进行处理。
-**成功**
-HTTP状态码200表示成功响应，并可能包含内容。如果响应含有内容，则将显示在相应的返回内容里面。
-**常见错误码**
-* 400 Bad Request – Invalid request forma 请求格式无效
-* 401 Unauthorized – Invalid API Key 无效的API Key
-* 403 Forbidden – You do not have access to the requested resource 请求无权限
-* 404 Not Found – 没有找到请求
-* 429 Too Many Requests – 请求太频繁被系统限流
-* 500 Internal Server Error – We had a problem with our server 服务器内部错误
-如果失败，Response body带有错误描述信息
-## 标准规范
-### 时间戳
-除非另外指定，API中的所有时间戳均以微秒为单位返回。
-请求签名中的ACCESS-TIMESTAMP的单位是秒，允许用小数表示更精确的时间。请求的时间戳必须在API服务时间的30秒内，否则请求将被视为过期并被拒绝。如果本地服务器时间和API服务器时间之间存在较大的偏差，那么我们建议您使用通过查询API服务器时间来更新Http Header。
-### 例子
+## Request interaction  
+Root URL for REST access：`https://www.1strade.co`
+### Request
+All requests are based on the Https protocol, and the Content-Type in the request header information needs to be uniformly set to: 'application/json'.
+**Request interaction description**
+1、Request parameters: encapsulate parameter according to interface request parameters.
+2、Submit request parameters: Submit the encapsulated request parameters to the server through POST/GET/DELETE.
+3、Server response: The server first performs parameter security verification on the user request data, and returns the response data to the user in JSON format according to the business logic after verification.
+4、Data processing: Processing server response data.
+**Success**
+The HTTP status code 200 indicates a successful response and may contain content. If the response contains content, it will be displayed in the corresponding return content.
+**Common error code**
+* 400 Bad Request – Invalid request format
+* 401 Unauthorized – Invalid API Key
+* 403 Forbidden – You do not have access to the requested resource 
+* 404 Not Found – No request found
+* 429 Too Many Requests – Restricted by the system because of too frequent requests.
+* 500 Internal Server Error – We had a problem with our server 
+If it fails, the Response body has an error description
+## Standard specification
+### Timestamp
+All timestamps in the API are returned in microseconds unless otherwise specified.
+The unit of ACCESS-TIMESTAMP in the request signature is seconds, allowing decimals to represent more precise time. The requested timestamp must be within 30 seconds of the API service time, otherwise the request will be considered expired and rejected. If there is a large deviation between the local server time and the API server time, then we recommend that you update the Http Header by querying the API server time.
+### Examples
 `1524801032573`
-### 数字
-为了保持跨平台时精度的完整性，十进制数字作为字符串返回。建议您在发起请求时也将数字转换为字符串以避免截断和精度错误。 
-整数（如交易编号和顺序）不加引号。
-### 限流
-如果请求过于频繁系统将自动限制请求，并在Http Header中返回429 too many requests状态码。
+### Digits 
+In order to maintain the integrity of the accuracy across platforms, decimal numbers are returned as strings. It is recommended that you also convert numbers to strings when invoking a request to avoid truncation and precision errors.
+Integers (such as transaction numbers and order) are not quoted.
+### Current limit
+If the request is too frequent, the system will automatically limit the request and return 429 Too many requests status code in the Http Header.
 ##### REST API
-* 公共接口：我们通过IP限制公共接口的调用：每2秒最多6个请求。
-* 私人接口：我们通过用户ID限制私人接口的调用：每2秒最多6个请求。
-* 某些接口的特殊限制在具体的接口上注明
-# 币币交易(Spot)API参考
-## 币币行情API
-### 1. 获取所有币对列表
-**请求**
+* Public interface: We restrict the invocation of public interfaces by IP: at most 6 requests every 2 seconds.
+* Private interface: We restrict the call of the private interface by user ID: at most 6 requests every 2 seconds.
+* The special restrictions on some interfaces are noted on the corresponding  interfaces.
+# Crypto-crypto trading(Spot)API reference
+## Cryptos market API
+### 1.Get the list of all pairs
+**Request**
 ```http
     # Request
     GET /openapi/exchange/public/currencies
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     [{
@@ -169,31 +168,31 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
     	"tickerFeesRate": "0"
     },...]
 ```
-**返回值说明**  
+**Return value description**  
 
-|返回字段 | 字段说明|
+|Return field | Field description|
 | ----------|:-------:|
-| baseIncrement | 交易数量最小交易变动单位 |
-| baseSymbol    | 交易货币 |
-| makerFeesRate | maker 费率 |
-| maxPrice  | 交易价格小数位数 |
-| maxVolume | 交易数量小数位数 |
-| minTrade | 最小委托量 |
-| online | 是否上线 |
-| pairCode | 是Base和quote之间的组合 BTC_USD |
-| quoteIncrement | 最小交易单位 |
-| quotePrecision | 计价货币数量单位精度 |
-| quoteSymbol | 计价货币 |
-| sort | 排序值 |
-| tickerFeesRate | ticker 费率 |
+| baseIncrement | The minimum changing amount of transactions|
+| baseSymbol    | Traded currency  |
+| makerFeesRate | maker rate |
+| maxPrice  | Trading price decimals places number |
+| maxVolume | Minimum decimals places of trading amount |
+| minTrade | Minimum order amount |
+| online | Online or not |
+| pairCode | the combination between Base and quote BTC_USD |
+| quoteIncrement | Minimum trading unit |
+| quotePrecision | Unit accuracy of pricing currency quantity  |
+| quoteSymbol | Pricing currency |
+| sort | Sort value |
+| tickerFeesRate | ticker rate |
 
-### 2. 获取币对交易深度列表
-**请求**
+### 2. Get trading depth list of trading pairs
+**Request**
 ```http
     # Request
     GET /openapi/exchange/public/{pairCode}/orderBook
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     {
@@ -213,27 +212,27 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
         ]
     }
 ```
-**返回值说明**  
+**Return value description**  
 
-|返回字段|字段说明|
+|Return field | Field description|
 |--------| :-------: |
-|asks| 卖方深度 |
-|bids| 买方深度 |
+|asks| Asker's depth |
+|bids| Bider's depth |
 
-**请求参数**  
+**Request parameters**  
 
-| 参数名 | 参数类型  | 必填 | 描述 |
+| Parameter Name | Parameter Type | Required | Description |
 | ------------- |----|----|----|
-| pairCode | String | 是 | 币对，如LTC_BTC |
+| pairCode | String | Yes | Trading pairs，example:LTC_BTC |
 
-### 3. 获取币对Ticker
-最新成交价、买一价、卖一价、24h最高价、24h最低价、24h开盘价和24h成交量的快照信息。
-**请求**
+### 3. Get trading pairs ticker
+Snapshot information of last trading price,bid 1 price, ask 1 price, 24h higest price, 24h lowest price, 24h open price and 24h trading volume.
+**Request**
 ```http
     # Request
     GET /openapi/exchange/public/{pairCode}/ticker
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     {
@@ -255,41 +254,41 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
     	"volume": "4101.34040000"
     }
 ```
-**返回值说明**
+**Return value description**
  
-|返回字段|字段说明|
+|Return field | Field description|
 |--------| :-------: |
-|buy| 最新买入价 |
-|change24| 24小时变化值 |
-|changePercentage| 变化百分比 |
-|changeRate24| 24小时涨跌比例 |
-|close| 24小时 close |
-|createOn| 创建时间 |
-|high| 最高成交价 |
-|high24| 24小时最高成交价 |
-|last| 最新成交价 |
-|low| 最低成交价 |
-|low24| 24小时最低成交价 |
-|open| 24小时 open |
-|pairCode| 币对信息 |
-|quoteVolume| 计价币的成交量 |
-|sell| 最新卖出价 |
-|volume| 基准币的成交量 |
+|buy| last bid price  |
+|change24| 24h change |
+|changePercentage| change percentage  |
+|changeRate24| 24h change rate |
+|close| 24h close |
+|createOn| create time|
+|high| Highest trading price |
+|high24| 24h highest trading price |
+|last| last trading price |
+|low| Lowest trading price |
+|low24| 24h lowest trading price |
+|open| 24h open |
+|pairCode| trading pairs information  |
+|quoteVolume| trade volume of pricing currency  |
+|sell| last ask price |
+|volume| trade volume of benchmark  currency |
     
-**请求参数**
+**Request parameters**
 
-|参数名|参数类型|必填|描述|
+|Parameter Name | Parameter Type | Required | Description|
 |------|----|:---:|:---:|
-|pairCode|String|是|币对，如ETH_BTC|
+|pairCode|String|Yes|trading pair，example:ETH_BTC|
     
-### 4. 获取币对历史成交记录，支持分页查询
-获取所请求交易对的历史成交信息，该请求支持分页。
-**请求**
+### 4. Get trading history of trading pairs,can be queried with pagination .
+Get trading history of the requested trading pairs,can be queried with pagination .
+**Request**
 ```http
     # Request
     GET /openapi/exchange/{pairCode}/fulfillment
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     [
@@ -318,57 +317,57 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
         ...
     ]
 ```
-**返回值说明**
+**Return value description**
 
-|返回字段|字段说明|
+|Return field | Field description|
 |--------|----|
-| id |订单id|
-| pairCode |是Base和quote之间的组合 BTC_USD|
-| userId |用户id|
-| brokerId |券商id|
-| side |方向 买、卖|
-| entrustPrice |下单价格|
-| amount |下单数量|
-| dealAmount |成交数量|
-| quoteAmount |基准币数量  只有在市价买的情况下会用到|
-| dealQuoteAmount |基准币已成交数量|
-| systemOrderType |10:限价 11:市价|
-| status |0:未成交 1:部分成交 2:完全成交 3:撤单中 -1:已撤单|
-| sourceInfo |下单来源 web,api,Ios,android|
-| createOn |创建时间|
-| updateOn |修改时间|
-| symbol |币种|
-| trunOver |成交金额  dealQuoteAmount * dealAmount|
-| notStrike |尚未成交的数量|
-| averagePrice |平均成交价|
-| openAmount |下单数量|
+| id |order id|
+| pairCode |the combination between Base and quote BTC_USD|
+| userId |user id|
+| brokerId |broker id|
+| side |side bid, ask|
+| entrustPrice |order price|
+| amount |order amount|
+| dealAmount |trading amount|
+| quoteAmount |benchmark currency amount , only used in bid orders with market price|
+| dealQuoteAmount |trading amount of benchmark currency|
+| systemOrderType |10:limit price 11:market price|
+| status |0:unfilled 1:partially filled 2:filled 3:cancelling  -1:canceled |
+| sourceInfo |order source web,api,Ios,android|
+| createOn |create time|
+| updateOn |modify time|
+| symbol |currency|
+| trunOver |trade volume   dealQuoteAmount * dealAmount|
+| notStrike |unfilled amount|
+| averagePrice |average trading price|
+| openAmount |order amount|
 
-**请求参数**
+**Request parameters**
 
-|参数名|参数类型|必填|描述|
+|Parameter Name | Parameter Type | Required | Description|
 |-----|:---:|----|----|
-|pairCode|String|是|币对，如LTC_BTC|
-|startDate|Long|否|开始时间，如1524801032573|
-|endDate|Long|否|结束时间，如1524801032573|
-|systemOrderType|Integer|否|10:限价 11:市价|
-|price|BigDecimal|否|价格|
-|amount|BigDecimal|否|数量|
-|source|String|否|币对，如LTC_BTCweb,api,Ios,android|
-|isHistory|Boolean|否|是否查历史数据、一周前成交的数据是历史数据、默认false|
-|page|Integer|否|第几页|
-|pageSize|Integer|否|每页条数|
+|pairCode|String|Yes|trading pair，example:LTC_BTC|
+|startDate|Long|No|Start time，example:1524801032573|
+|endDate|Long|No|end time，example:1524801032573|
+|systemOrderType|Integer|No|10:limit price 11:market price|
+|price|BigDecimal|No|Price|
+|amount|BigDecimal|No|Amount|
+|source|String|No|Trading pair，example:LTC_BTCweb,api,Ios,android|
+|isHistory|Boolean|No|Whether to check historical data, the data of one week ago is historical data, default false|
+|page|Integer|No|Page number|
+|pageSize|Integer|No|terms number of per page|
 
-**解释说明**
-+ 交易方向 side 表示每一笔成交订单中 maker 下单方向,maker 是指将订单挂在订单深度列表上的交易用户，即被动成交方。
-+ buy 代表行情下跌，因为 maker 是买单，maker 的买单被成交，所以价格下跌；相反的情况下，sell代表行情上涨，因为此时maker是卖单，卖单被成交，表示上涨。
+**Description**
++ Trade side represents the maker's side in each filled orders, and  the maker refers to the trader who places the order on the order depth chart ,that is, the passive trading side.
++ Buy represents a dropping market, because the maker places the bid order, and his order is filled, resulting in price falls; On the contrary, sell represents the market going up, because the maker places the ask order, and the order is filled, indicating the rise of price.
 
-### 5. 获取K线数据
-**请求**
+### 5. Get K-Line data
+**Request**
 ```http
     # Request
     GET  /openapi/exchange/public/{pairCode}/candles?interval=1min&start=start_time&end=end_time
 ```
-**响应**
+**Response**
     
 ```javascript
     # Response
@@ -377,34 +376,35 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
         ...
     }
 ```
-**返回值说明（按顺序）**  
+**Return value description (in order)**  
     
-|返回字段|字段说明|
+|Return field | Field description|
 |-----|----|
-|1415398768|K线开始时间戳|
-|0.32|最低价|
-|0.42|最高价|
-|0.36|开盘价（第一笔交易）|
-|0.41|收盘价（最后一笔交易）|
-|12.3|交易量（按交易币统计）|
-**请求参数**
+|1415398768|K line start timestamp|
+|0.32|Lowest price|
+|0.42|Highest price|
+|0.36|Open price（the first transaction）|
+|0.41|Close price（the last transaction ）|
+|12.3|Trade volume （calculated with traded currency ）|
+**Request parameters**
     
-|参数名|参数类型|必填|描述|
+|Parameter Name | Parameter Type | Required | Description|
 |-----|----|----|----|
-|pairCode|String|是|币对如btc_usdt|
-|interval|String|是|K线周期类型如1min/1hour/day/week/month|
-|start|String|否|基于ISO 8601标准的开始时间|
-|end|String|否|基于ISO 8601标准的结束时间|
+|pairCode|String|Yes|Trading pair example:btc_usdt|
+|interval|String|Yes|K line cycle type, such as1min/1hour/day/week/month|
+|start|String|No|Start time based on ISO 8601 standard|
+|end|String|No|End time based on ISO 8601 standard|
 
-### 6. 获取服务器时间
-获取API服务器的时间的接口。
-**请求**
+### 6. Get server time
+The interface to get the time of the API server.
+
+**Request**
 ```http
     # Request
     
     GET /openapi/exchange/public/time
 ```
-**响应**
+**Response**
     
 ```javascript
     # Reponse
@@ -415,23 +415,22 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
     }
 ```
     
-**返回值说明**
+**Return value description**
     
-|返回字段|字段说明|
+|Return field | Field description|
 |-----|----|
-|epoch|以秒为时间戳形式表达的服务器时间|
-|iso|为ISO 8061标准的时间字符串表达的服务器时间|
-|timestamp|以毫秒为时间戳形式表达的服务器时间|
+|epoch|Server time expressed in seconds as a timestamp|
+|iso|Server time for ISO 8061 standard time string representation|
+|timestamp|Server time expressed in milliseconds as a timestamp|
 
-## 币币账户API
-### 1. 获取账户信息
-获取币币交易账户余额列表，查询各币种的余额，冻结和可用情况。
-**请求**
+## Crypto account API
+### 1. Get account information Get the balance list of crypto  account, check the balance of each currency and their freeze and availability status.
+**Request**
 ```
     # Request
     GET /openapi/exchange/assets
 ```
-**响应**
+**Response**
 ```
     # Response
     [
@@ -446,90 +445,90 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
         ...
     ]
 ```
-**返回值说明**
+**Return value description**
 
-|返回字段|字段说明|
+|Return field | Field description|
 |----|----|
-|brokerId|券商id|
-|symbol|币种|
-|available|余额|
-|hold|冻结|
-|baseBTC|折合BTC|
-|withdrawLimit|提币限额|
+|brokerId|broker id|
+|symbol|currency|
+|available|balance|
+|hold|frozen|
+|baseBTC|convert to BTC|
+|withdrawLimit|Withdraw amount limit|
 
-### 2. 交易委托
-提供限价和市价两种订单类型。
-**请求**
+### 2. Orders
+Provide limit orders and market orders.
+**Request**
 ```
     # Request
     POST /openapi/exchange/{pairCode}/orders
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     10000
 ```   
-**返回值说明**
-订单id
+**Return value description**
+Order id
 
-**请求参数**
+**Request parameters**
 
-|参数名| 参数类型 |必填|描述|
+|Parameter Name | Parameter Type | Required | Description|
 |:----:|:----:|:---:|----|
-|pairCode|String|是|币对，如BTC_USDT|
-|side|String|是|买入为buy，卖出为sell|
-|systemOrderType|String|是|限价委托为limit，市价委托为market|
-|volume|String|否|限价委托以及市价卖出时传递，代表交易币的数量|
-|price|String|否|限价委托时传递，代表交易价格|
-|quoteVolume|String|否|市价买入时传递，代表计价币的数量|
+|pairCode|String|Yes|trading pair，example:BTC_USDT|
+|side|String|Yes|bid is buy，ask is sell|
+|systemOrderType|String|Yes|limit is limit order，market is market price |
+|volume|String|No|Transmit parameters when there is limit order or ask order with market price, representing the traded currency amount.|
+|price|String|No|Transmit parameters when there is limit order , representing the trading price.|
+|quoteVolume|String|No|Transmit parameters when there is bid order with market price , representing the pricing currency amount.|
 
-### 3. 撤销所有委托
-撤销目标币对下所有未成交委托，最多撤销50条。由于是异步撤单，所以该接口没有返回值。
-**请求**
+### 3. Cancel all orders
+Cancel all unfilled orders of the target trading pair,  50 cancellations at most. The interface has no return value because the cancellations are conducted asynchronously.
+**Request**
 ```
     # Request
     DELETE /openapi/exchange/{pairCode}/cancel-all
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     { ...}
 ```
-**请求参数**
+**Request parameters**
 
-|参数名|参数类型|必填|描述|
+|Parameter Name | Parameter Type | Required | Description|
 |----|----| ----| ----|
-|pairCode|String|是|币对， 如BTC_USDT|
-目前批量撤销200个挂单
+|pairCode|String|Yes|trading pair， example:BTC_USDT|
+Currently canceling 200 pending orders in batches.
 
-### 4. 按订单撤销委托
-按照订单id撤销指定订单。由于是异步撤单，所以该接口没有返回值。
-**请求**
+### 4. Cancel specific orders
+The specified order is cancelled according to the order id. The interface has no return value because the cancellations are conducted asynchronously.
+**Request**
 ```http
     # Request
     DELETE /openapi/exchange/{pairCode}/orders/{id}
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     {...}
 ```
-**请求参数**
+**Request parameters**
 
-|参数名|参数类型|必填|描述|
+|Parameter Name | Parameter Type | Required | Description|
 |---|----|----|----|
-|code|String|是|币对，如BTC_USDT|
-|orderId|String|是|需要撤销的未成交委托的id|
+|code|String|Yes|trading pair，example:BTC_USDT|
+|orderId|String|是|The ID of the unfilled order that needs to be canceled|
 
-### 5. 查询订单，支持分页查询
-按照订单状态查询订单。
+### 5. Query orders, support pagination.
+Query orders by order status.
     
-**请求**
+**Request**
 ```http   
     # Request
     GET /openapi/exchange/orders
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     [
@@ -558,53 +557,53 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
         ...
     ]
 ```
-**返回值说明**
+**Return value description**
 
-|返回字段|字段说明|
+|Return field | Field description|
 |--------|----|
-| id |订单id|
-| pairCode |是Base和quote之间的组合 BTC_USD|
-| userId |用户id|
-| brokerId |券商id|
-| side |方向 买、卖|
-| entrustPrice |下单价格|
-| amount |下单数量|
-| dealAmount |成交数量|
-| quoteAmount |基准币数量  只有在市价买的情况下会用到|
-| dealQuoteAmount |基准币已成交数量|
-| systemOrderType |10:限价 11:市价|
-| status |0:未成交 1:部分成交 2:完全成交 3:撤单中 -1:已撤单|
-| sourceInfo |下单来源 web,api,Ios,android|
-| createOn |创建时间|
-| updateOn |修改时间|
-| symbol |币种|
-| trunOver |成交金额  dealQuoteAmount * dealAmount|
-| notStrike |尚未成交的数量|
-| averagePrice |平均成交价|
-| openAmount |下单数量|
+| id |Order id|
+| pairCode |the combination between Base and quote BTC_USD|
+| userId |User id|
+| brokerId |Broker id|
+| side |Side bid,ask|
+| entrustPrice |order price|
+| amount |order amount|
+| dealAmount |trading amount|
+| quoteAmount |benchmark currency amount  only used in bid order with market price|
+| dealQuoteAmount |trading amount of benchmark currency|
+| systemOrderType |10:limit price 11:market price|
+| status |0:unfilled 1:partially filled 2:filled 3:cancelling  -1:canceled|
+| sourceInfo |order source web,api,Ios,android|
+| createOn |create time |
+| updateOn |modify time |
+| symbol |currency|
+| trunOver |trade volume   dealQuoteAmount * dealAmount|
+| notStrike |unfilled amount|
+| averagePrice |average trading price|
+| openAmount |order amount|
 
-**请求参数**
+**Request parameters**
 
-|参数名 | 参数类型 | 必填 | 描述 |
+|Parameter Name | Parameter Type | Required | Description|
 |---|----|----|----|
-|pairCode|String|否|币对，如BTC_USDT|
-|startDate|Long|否|开始时间 毫秒|
-|endDate|Long|否|结束时间 毫秒|
-|price|BigDecimal|否|下单价格|
-|amount|BigDecimal|否|下单数量|
-|systemOrderType|Integer|否|10:限价 11:市价|
-|source|String|否|币对，如LTC_BTCweb,api,Ios,android|
-|page|Integer|否|第几页|
-|pageSize|Integer|否|每页条数|
+|pairCode|String|No|Trading pair，example:BTC_USDT|
+|startDate|Long|No|Start time  milliseconds|
+|endDate|Long|No|End time  milliseconds|
+|price|BigDecimal|No|Order price|
+|amount|BigDecimal|No|Order amount|
+|systemOrderType|Integer|No|10:limit price  11:market price|
+|source|String|No|Trading pair，example:LTC_BTCweb,api,Ios,android|
+|page|Integer|No|Page number|
+|pageSize|Integer|No|Terms number per page|
 
-### 6. 获取账单，支持分页查询
-获取币币交易账单。
-**请求**
+### 6. Get bills, can be checked with pagination 
+Get the crypto transaction bill.
+**Request**
 ```http
     # Request
     GET /openapi/exchange/bills
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     {
@@ -636,25 +635,25 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
     	"msg": "success"
     }
 ```
-**返回值说明**
+**Return value description**
 
-|返回字段 | 字段说明 |
+|Return field | Field description|
 |----|----|
-|amount|变动数量|
-|balance|变动后余额|
-|createdDate|账单时间戳|
-|details|详情|
-|orderId|对应订单ID|
-|code|订单对应币对，如BTC_USDT|
-|id|账单ID|
-|type|交易类型|
+|amount|change amount|
+|balance|balance after change|
+|createdDate|bill timestamp|
+|details|details|
+|orderId|corresponding order ID|
+|code|corresponding trading pair of the order，example:BTC_USDT|
+|id|bill ID|
+|type|transaction type|
 
-**请求参数**  
+**Request parameters**  
 
-|参数名|参数类型|必填|描述|
+|Parameter Name | Parameter Type | Required | Description|
 |----|---|---|---|
-|currencyCode|String|是|币种，如BTC|
-|limit|Integer|否|请求返回数据量，默认/最大值为100|
+|currencyCode|String|Yes|currency ，such as BTC|
+|limit|Integer|No|Request return data volume, default / maximum value is 100|
   
 [1strade]: https://www.1strade.co 
 [English Docs]: https://github.com/1strade/openAPI/blob/master/README_EN.md
