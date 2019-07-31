@@ -518,7 +518,7 @@ The specified order is cancelled according to the order id. The interface has no
 |Parameter Name | Parameter Type | Required | Description|
 |---|----|----|----|
 |code|String|Yes|trading pair，example:BTC_USDT|
-|orderId|String|是|The ID of the unfilled order that needs to be canceled|
+|orderId|String|Yes|The ID of the unfilled order that needs to be canceled|
 
 ### 5. Query orders, support pagination.
 Query orders by order status.
