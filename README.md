@@ -608,32 +608,48 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 ```javascript
     # Response
     {
-    	"code": 0,
-    	"data": {
-    		"bills": [{
-    				"amount": 1.6,
-    				"assets": "51.44",
-    				"brokerId": 0,
-    				"createOn": 1552636850000,
-    				"fee": -0.16,
-    				"id": 0,
-    				"makerTaker": 0,
-    				"referId": 0,
-    				"symbol": "",
-    				"tradeNo": "",
-    				"type": 7,
-    				"updateOn": 0,
-    				"userId": 0
-    			},
-    			...
-    		],
-    		"paginate": {
-    			"page": 1,
-    			"pageSize": 10,
-    			"total": 0
-    		}
-    	},
-    	"msg": "success"
+    	"bills": [{
+    		"afterAssets": 97.0000000000000000,
+    		"amount": -2.00000000,
+    		"assets": 97,
+    		"beforeAssets": 99.0000000000000000,
+    		"brokerId": 10000,
+    		"createOn": 1565590577000,
+    		"fee": 0E-8,
+    		"id": 0,
+    		"makerTaker": "maker",
+    		"pairCode": "LTC_USDT",
+    		"price": 400.0000000000000000,
+    		"referId": 51815389100048,
+    		"symbol": "LTC",
+    		"tradeNo": "",
+    		"type": 8,
+    		"updateOn": 0,
+    		"userId": 0
+    	}, {
+    		"afterAssets": 899.1000000000000000,
+    		"amount": 800.00000000,
+    		"assets": 899.1,
+    		"beforeAssets": 99.9000000000000000,
+    		"brokerId": 10000,
+    		"createOn": 1565590577000,
+    		"fee": -0.80000000,
+    		"id": 0,
+    		"makerTaker": "maker",
+    		"pairCode": "LTC_USDT",
+    		"price": 400.0000000000000000,
+    		"referId": 51815389100048,
+    		"symbol": "USDT",
+    		"tradeNo": "",
+    		"type": 7,
+    		"updateOn": 0,
+    		"userId": 0
+    	}],
+    	"paginate": {
+    		"page": 1,
+    		"pageSize": 2,
+    		"total": 4
+    	}
     }
 ```
 **返回值说明**
@@ -653,8 +669,13 @@ HTTP状态码200表示成功响应，并可能包含内容。如果响应含有�
 
 |参数名|参数类型|必填|描述|
 |----|---|---|---|
-|currencyCode|String|是|币种，如BTC|
-|limit|Integer|否|请求返回数据量，默认/最大值为100|
+|page|Integer|是|当前第几页|
+|pageSize|Integer|是|每页获取条数|
+|startDate|Long|否|开始时间戳毫秒|
+|endDate|Long|否|结束时间戳毫秒|
+|symbol|String|否|币种 如BTC|
+|type|Integer|否|RECHARGE(1),WITHDRAW(2),BUY(7),SELL(8),TRANSFER_IN(43),TRANSFER_OUT(44),SERVICE_FEE_BUY(88),SERVICE_FEE_SELL(89)|
+|isHistory|Boolean|否|是否历史数据|
   
 [1strade]: https://www.1strade.co 
 [English Docs]: https://github.com/1strade/openAPI/blob/master/README_EN.md
