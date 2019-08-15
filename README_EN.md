@@ -596,14 +596,14 @@ Query orders by order status.
 |page|Integer|No|Page number|
 |pageSize|Integer|No|Terms number per page|
 
-### 6. 获取账单，支持分页查询
-获取币币交易账单。
-**请求**
+### 6. Get the bills, paged query available.
+Get the bills of crypto-crypto trading.
+**Request**
 ```http
     # Request
     GET /openapi/exchange/bills
 ```
-**响应**
+**Response**
 ```javascript
     # Response
     {
