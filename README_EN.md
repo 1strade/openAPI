@@ -596,64 +596,92 @@ Query orders by order status.
 |page|Integer|No|Page number|
 |pageSize|Integer|No|Terms number per page|
 
-### 6. Get bills, can be checked with pagination 
-Get the crypto transaction bill.
-**Request**
+### 6. 获取账单，支持分页查询
+获取币币交易账单。
+**请求**
 ```http
     # Request
     GET /openapi/exchange/bills
 ```
-**Response**
+**响应**
 ```javascript
     # Response
     {
-    	"code": 0,
-    	"data": {
-    		"bills": [{
-    				"amount": 1.6,
-    				"assets": "51.44",
-    				"brokerId": 0,
-    				"createOn": 1552636850000,
-    				"fee": -0.16,
-    				"id": 0,
-    				"makerTaker": 0,
-    				"referId": 0,
-    				"symbol": "",
-    				"tradeNo": "",
-    				"type": 7,
-    				"updateOn": 0,
-    				"userId": 0
-    			},
-    			...
-    		],
-    		"paginate": {
-    			"page": 1,
-    			"pageSize": 10,
-    			"total": 0
-    		}
-    	},
-    	"msg": "success"
+    	"bills": [{
+    		"afterAssets": 97.0000000000000000,
+    		"amount": -2.00000000,
+    		"assets": 97,
+    		"beforeAssets": 99.0000000000000000,
+    		"brokerId": 10000,
+    		"createOn": 1565590577000,
+    		"fee": 0E-8,
+    		"id": 0,
+    		"makerTaker": "maker",
+    		"pairCode": "LTC_USDT",
+    		"price": 400.0000000000000000,
+    		"referId": 51815389100048,
+    		"symbol": "LTC",
+    		"tradeNo": "",
+    		"type": 8,
+    		"updateOn": 0,
+    		"userId": 0
+    	}, {
+    		"afterAssets": 899.1000000000000000,
+    		"amount": 800.00000000,
+    		"assets": 899.1,
+    		"beforeAssets": 99.9000000000000000,
+    		"brokerId": 10000,
+    		"createOn": 1565590577000,
+    		"fee": -0.80000000,
+    		"id": 0,
+    		"makerTaker": "maker",
+    		"pairCode": "LTC_USDT",
+    		"price": 400.0000000000000000,
+    		"referId": 51815389100048,
+    		"symbol": "USDT",
+    		"tradeNo": "",
+    		"type": 7,
+    		"updateOn": 0,
+    		"userId": 0
+    	}],
+    	"paginate": {
+    		"page": 1,
+    		"pageSize": 2,
+    		"total": 4
+    	}
     }
 ```
-**Return value description**
+**返回值说明**
 
-|Return field | Field description|
+|返回字段 | 字段说明 |
 |----|----|
-|amount|change amount|
-|balance|balance after change|
-|createdDate|bill timestamp|
-|details|details|
-|orderId|corresponding order ID|
-|code|corresponding trading pair of the order，example:BTC_USDT|
-|id|bill ID|
-|type|transaction type|
+|afterAssets|变动后资产|
+|amount|变换金额|
+|beforeAssets|变动前资产|
+|brokerId|券商id|
+|createOn|创建时间|
+|fee|手续费|
+|makerTaker|maker挂单taker吃单|
+|pairCode|币对|
+|price|价格|
+|referId|关联id|
+|symbol|币种|
+|tradeNo|交易号 转账时有唯一交易号|
+|type|账单类型|
+|updateOn|修改时间|
+|userId|用户id|
 
-**Request parameters**  
+**请求参数**  
 
-|Parameter Name | Parameter Type | Required | Description|
+|参数名|参数类型|必填|描述|
 |----|---|---|---|
-|currencyCode|String|Yes|currency ，such as BTC|
-|limit|Integer|No|Request return data volume, default / maximum value is 100|
+|page|Integer|是|当前第几页|
+|pageSize|Integer|是|每页获取条数|
+|startDate|Long|否|开始时间戳毫秒|
+|endDate|Long|否|结束时间戳毫秒|
+|symbol|String|否|币种 如BTC|
+|type|Integer|否|RECHARGE(1),WITHDRAW(2),BUY(7),SELL(8),TRANSFER_IN(43),TRANSFER_OUT(44),SERVICE_FEE_BUY(88),SERVICE_FEE_SELL(89)|
+|isHistory|Boolean|否|是否历史数据|
   
 [1strade]: https://www.1strade.co 
 [English Docs]: https://github.com/1strade/openAPI/blob/master/README_EN.md
