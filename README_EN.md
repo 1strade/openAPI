@@ -596,7 +596,7 @@ Query orders by order status.
 |page|Integer|No|Page number|
 |pageSize|Integer|No|Terms number per page|
 
-### 6. Get the bills, paged query available.
+### 6. Get the bills,support pagination.
 Get the bills of crypto-crypto trading.
 **Request**
 ```http
@@ -651,37 +651,37 @@ Get the bills of crypto-crypto trading.
     	}
     }
 ```
-**返回值说明**
+**Return value description**
 
-|返回字段 | 字段说明 |
+|Return field | Field description |
 |----|----|
-|afterAssets|变动后资产|
-|amount|变换金额|
-|beforeAssets|变动前资产|
-|brokerId|券商id|
-|createOn|创建时间|
-|fee|手续费|
-|makerTaker|maker挂单taker吃单|
-|pairCode|币对|
-|price|价格|
-|referId|关联id|
-|symbol|币种|
-|tradeNo|交易号 转账时有唯一交易号|
-|type|账单类型|
-|updateOn|修改时间|
-|userId|用户id|
+|afterAssets|Asset after change|
+|amount|Change amount|
+|beforeAssets|Asset before change|
+|brokerId|Broker id|
+|createOn|Create time|
+|fee|Fee|
+|makerTaker|Maker taker|
+|pairCode|Pair|
+|price|Price|
+|referId|Referral id|
+|symbol|Coin|
+|tradeNo|Transaction number There is a unique transaction number when transferring asset.|
+|type|Bill type|
+|updateOn|Update time|
+|userId|User id|
 
-**请求参数**  
+**Request parameters**  
 
-|参数名|参数类型|必填|描述|
+|Parameter Name|Parameter Type|Required|Description|
 |----|---|---|---|
-|page|Integer|是|当前第几页|
-|pageSize|Integer|是|每页获取条数|
-|startDate|Long|否|开始时间戳毫秒|
-|endDate|Long|否|结束时间戳毫秒|
-|symbol|String|否|币种 如BTC|
-|type|Integer|否|RECHARGE(1),WITHDRAW(2),BUY(7),SELL(8),TRANSFER_IN(43),TRANSFER_OUT(44),SERVICE_FEE_BUY(88),SERVICE_FEE_SELL(89)|
-|isHistory|Boolean|否|是否历史数据|
+|page|Integer|Yes|current page number|
+|pageSize|Integer|Yes|terms number of per page|
+|startDate|Long|No|Start timestamp millisecond|
+|endDate|Long|No|End timestamp millisecond|
+|symbol|String|No|Coin, such as BTC|
+|type|Integer|No|RECHARGE(1),WITHDRAW(2),BUY(7),SELL(8),TRANSFER_IN(43),TRANSFER_OUT(44),SERVICE_FEE_BUY(88),SERVICE_FEE_SELL(89)|
+|isHistory|Boolean|No|History data or not|
   
 [1strade]: https://www.1strade.co 
 [English Docs]: https://github.com/1strade/openAPI/blob/master/README_EN.md
