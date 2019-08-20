@@ -95,7 +95,7 @@ hmac = hmac(secretkey, Message, SHA256)
 Signature = base64.encode(hmac.digest())
 ```
 ## 请求交互  
-REST访问的根URL：`https://www.1strade.co`
+REST访问的根URL：`https://www.1strade.io`
 ### 请求
 所有请求基于Https协议，请求头信息中Content-Type需要统一设置为:'application/json’。
 **请求交互说明**
