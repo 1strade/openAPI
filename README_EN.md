@@ -94,7 +94,7 @@ hmac = hmac(secretkey, Message, SHA256)
 Signature = base64.encode(hmac.digest())
 ```
 ## Request interaction  
-Root URL for REST access：`https://www.1strade.co`
+Root URL for REST access：`https://www.1strade.io`
 ### Request
 All requests are based on the Https protocol, and the Content-Type in the request header information needs to be uniformly set to: 'application/json'.
 **Request interaction description**
