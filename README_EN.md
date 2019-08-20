@@ -20,7 +20,7 @@
 - [Spot business API reference](#Spot-business-api-reference)
     - [Cryptos market API](#Cryptos-market-api)
         - [1. Get the list of all pairs](#1-Get-a-list-of-all-pairs)
-        - [2. Get trading depth list of trading pairs](#2-Get-trading-depth-list-of-trading pairs)
+        - [2. Get trading depth list of trading pairs](#2-Get-trading-depth-list-of-trading-pairs)
         - [3. Get pairs Ticker](#3-Get-pairs-ticker)
         - [4. Get trading history of trading pairs](#4-Get-trading-history-of-trading-pairs)
         - [5. Get K-Line data](#5-Get-K-Line-data)
