@@ -1,6 +1,6 @@
 1strade trading platform official API documentation
 ==================================================
-[1strade][]Trading platform developer documentation([简体中文][])。
+[1strade][] Trading platform developer documentation([简体中文文档][])。
 <!-- TOC -->
 - [Introduction ](#Introduction )
 - [Start to use ](#Start-to-use)
@@ -684,5 +684,5 @@ Get the bills of crypto-crypto trading.
 |isHistory|Boolean|No|History data or not|
   
 [1strade]: https://www.1strade.io
-[简体中文]: https://github.com/1strade/openAPI/blob/master/README.md
+[简体中文文档]: https://github.com/1strade/openAPI/blob/master/README.md
 
