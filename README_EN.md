@@ -3,7 +3,7 @@
 [1strade][]Trading platform developer documentation([Chinese Docs][])。
 <!-- TOC -->
 - [Introduction ](#Introduction )
-- [Start to use](# Start to use)
+- [Start to use ](# Start to use)
 - [API interface encryption verification](#api interface encryption verification)
     - [Generate API Key](#Generate api-key)
     - [Propose request](#Propose request)
@@ -37,7 +37,7 @@
 Welcome to use [1strade][]developer documentation.
 This document provides an introduction of 1strade crypto-crypto trading service API usage methods such as market inquiry, trading, and account management .
 The market API is a public interface that provides market data of the crypto trading market; the trading and account API require identity authentication for functions such as order placing, order cancellation and account information query .
-# Start to use   
+# Start to use
 REST，the abbreviation of Representational State Transfer，is a kind of popular  internet transfer architecture featured with clear and standard structure ,scalablity and easy operation .The advantages are as follows: 
 + In a RESTful architecture, each URL represents a kind of resource;
 + A layer of presentation of such resources between the client end and the server;
