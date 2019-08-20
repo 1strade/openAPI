@@ -3,7 +3,7 @@
 [1strade][]Trading platform developer documentation([Chinese Docs][])。
 <!-- TOC -->
 - [Introduction ](#Introduction )
-- [Start to use](# Start to use)
+- [Start to use](# Start-to-use)
 - [API interface encryption verification](#api interface encryption verification)
     - [Generate API Key](#Generate api-key)
     - [Propose request](#Propose request)
