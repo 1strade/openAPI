@@ -4,9 +4,9 @@
 <!-- TOC -->
 - [Introduction ](#Introduction )
 - [Start to use ](#Start-to-use)
-- [API interface encryption verification](#api interface encryption verification)
-    - [Generate API Key](#Generate api-key)
-    - [Propose request](#Propose request)
+- [API interface encryption verification](#api-interface-encryption-verification)
+    - [Generate API Key](#Generate-api-key)
+    - [Propose request](#Propose-request)
     - [Signature](#Signature)
     - [Select timestamp](#Select timestamp)
     - [Request interaction](#Request interaction)
